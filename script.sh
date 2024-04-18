@@ -4,15 +4,14 @@
 # Porownywarka plikow, katalogow na podstawie algorytmu kryptograficznej funkcji skrotu SHA256 
 
 source constants.sh
+source finder.sh
 
 $selectedOption
 
 
 # glowne menu
 function printMainMenu {
-  echo "$porownajPliki Siema asd"
-  menu=("$porownajPliki" "$porownajKatalogi" "$komendaWTerminalu" "$wyjscie")
-  # menu=("Porównaj pliki" "Porównaj katalogi" "Komenda w terminalu" "Wyjście")
+  menu=("$porownajPliki" "$porownajKatalogi" "$porownajZListy" "$komendaWTerminalu" "$wyjscie")
 
   odp=`zenity --list --column=Menu "${menu[@]}" --height 420`
 
@@ -21,8 +20,17 @@ function printMainMenu {
 
 
 function handleCompareFiles {
-  #ads
-  echo "Porównaj pliki"
+  # podaj ilosc plikow
+   iloscPlikow=`zenity --entry --text="Podaj ilosc plikow do porownania"`
+
+  # petla pobierajaca sciezki do plikow
+  for (( i=1; i<=$iloscPlikow; i++ ))
+  do
+  findFile
+    # sciezkaPliku=`zenity --file-selection --title="Wybierz plik $i"`
+    # echo "Sciezka pliku $i: $sciezkaPliku"
+  done
+
 }
 
 # wywolywanie akcji dla glownego menu
@@ -32,6 +40,9 @@ function handleSelectedOption {
       handleCompareFiles
       ;;
     "$porownajKatalogi")
+      handleCompareDirectories
+      ;;
+    "$porownajZListy")
       handleCompareDirectories
       ;;
     "$komendaWTerminalu")
@@ -49,6 +60,7 @@ function start {
 while [ 1 ]; do 
   selectedOption=$(printMainMenu)
 
+  handleSelectedOption
 
 done
 }
