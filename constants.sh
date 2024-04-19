@@ -7,3 +7,6 @@ komendaWTerminalu="Komenda w terminalu"
 wyjscie="Wyjście"
 
 universalInfoWidth=320
+
+TRUE=0
+FALSE=1

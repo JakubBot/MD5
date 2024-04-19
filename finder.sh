@@ -34,7 +34,17 @@ function getDirectory {
 function findFile {
     # najpierw znajdz folder, potem z folderu szukaj plik
     getDirectory
+    
+    if [ -z "$directory" ]; then
+        return
+    fi
+    
     getFileName
+
+    if [ -z "$fileName" ]; then
+        return
+    fi
+
     
     found_folder=$(findFolder)
     
@@ -58,6 +68,10 @@ function findFile {
 
 function handleFolderSearch {
     getDirectory
+
+    if [ -z "$directory" ]; then
+        return
+    fi
     
     found_folder=$(findFolder)
     

@@ -6,6 +6,7 @@
 source constants.sh
 source finder.sh
 source compareMD5.sh
+source utils.sh
 
 $selectedOption
 
@@ -21,7 +22,22 @@ function printMainMenu {
 
 
 function handleCompareFiles {
-    filesCount=`zenity --entry --text="Podaj ilosc plikow do porownania" --title="Pliki"` 
+    filesCount=-1
+    
+    while [ $filesCount -lt 2 ]; do
+        filesCount=`zenity --entry --text="Podaj ilosc plikow do porownania\n- minimum 2\n- 0 by przerwac" --title="Pliki"`
+        
+        isNum=$(isNumber2 "$filesCount")
+        
+        if [ $isNum -eq $FALSE ]; then
+            filesCount=-1
+            continue
+        fi
+        
+        if [ $filesCount -eq 0 ]; then
+            return
+        fi
+    done
     
     paths=()
     
@@ -31,6 +47,7 @@ function handleCompareFiles {
         path=$(findFile)
         
         if [ -z "$path" ]; then
+            zenity --info --text "Nie znaleziono pliku" --width=200 --height=200
             continue
         fi
         
@@ -43,7 +60,23 @@ function handleCompareFiles {
 }
 
 function handleCompareDirectories {
-    dirCount=`zenity --entry --text="Podaj ilosc folderow do porownania" --title="Foldery"`
+    dirCount=-1
+    
+    while [ $dirCount -lt 2 ]; do
+        dirCount=`zenity --entry --text="Podaj ilosc folderow do porownania\n- minimum 2\n- 0 by przerwac" --title="Foldery"`
+        
+        isNum=$(isNumber2 "$dirCount")
+        
+        if [ $isNum -eq $FALSE ]; then
+            dirCount=-1
+            continue
+        fi
+        
+        
+        if [ $dirCount -eq 0 ]; then
+            return
+        fi
+    done
     
     directories=()
     
@@ -53,13 +86,16 @@ function handleCompareDirectories {
         directory=$(handleFolderSearch)
         
         if [ -z "$directory" ]; then
+            
+            zenity --info --text "Nie znaleziono folderu" --width=200 --height=200
+            
             continue
         fi
         
         directories+=("$directory")
         addedDirectories=$((addedDirectories+1))
     done
-
+    
     
     compareDirectories "${directories[@]}"
     
