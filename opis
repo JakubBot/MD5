@@ -1,20 +1,26 @@
-- obsługa katalogów
-
-Rekurencyjne przechodzenie po plikach, nie aktualne i sprawdzanie czy każdy plik ma taki sam hash, jak nie dodajemy do reportu, podczas generowania hasła również do pliku temp dopisujemy ten hash, na końcu poswstaje długi hash i z 2(lub więcej) folderow porównujemy hash
-
-
-- obsługa wielu plikow 
-Użytkownik może podać wiele nazw plikow / folderów 
-
-- interfejs zenity
-
-- optymalizacja
-
-Jeśli rozmiar i data modyfikacji jest taka sama to można pominąć generowanie hasła 
-
-- generowanie raportu do pliku, jakie foldery / pliki są takie same
-
-- przy probie generowania hasła, sprawdz czy jest dostęp do odczytu, jak nie przejdź do następnego
-
+Temat: 9. Porównywanie plikow i katalogow wg skrótu md5
+Skrypt:
+- interfejs w zenity
+- Obsługa katalogów
+- Rekurencyjne przechodzenie po plikach, sprawdzanie hash plikow. Pliki które mają
+różne hashe zapisujemy do pliku info.txt(wraz z innymi danymi), na końcu generujemy
+hash dla folderu(jeśli operujemy na folderach) i porównujemy. Wszystko główne działania
+będą widoczne w głównym pliku txt - info.txt, gdzie będzie można zobaczyć wyniki
+porównań i inne dane.
+- Obsługa wielu plików
+- Użytkownik może porównywać wiele folderow i plikow(ustawiamy 1 jako główny i
+potem przekazujemy wszystkie foldery/pliki ktore maja byc z nim porównywane)
+- Podczas rekurencyjnego generowania hasha, sprawdzanie czy mamy uprawnienia
+chociażby do odczytu pliku, w przeciwnym razie omijamy plik i w pliku info.txt z
+porównaniami / wynikami również zaznaczamy pliki które nie zostały skontrolowane
 - sprawdzanie integralności systemu
-Dodać opcje by ustawić integralność systemu taka jak jest w danej chwili(tutaj tworzy kopie zapasowa). Kolejny przycisk sprawdza czy pliki w danym systemie(katalogu) nie zostały zmienione(znów generowanie hash itd). Pliki które zostały zmienione (nazwa / ścieżka / uprawnienia / data zmiany) wypisuje do specjalnego pliku changed_files tak by administrator mógł kontrolować zmian. Dodać opcje przywrócenia stanu początkowego(pliki z backup'u podmieniamy z obecnymi)
+- Możliwość zrobienia backupu całego folderu.
+- Generowanie listy plików które zostały zmienione(nazwa / ścieżka / data zmiany, tak by
+latwo kontrolowac wszystkie zmiany),
+- Dodanie opcji przywracania stanu początkowego(usuwania wszystkich zmian)
+
+
+// to do
+dodaj generate raport dla katalogow
+backup plikow
+branie z selecta url do wyszukiwania

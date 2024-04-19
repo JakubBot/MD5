@@ -27,7 +27,7 @@ function handleCompareFiles {
     while [ $filesCount -lt 2 ]; do
         filesCount=`zenity --entry --text="Podaj ilosc plikow do porownania\n- minimum 2\n- 0 by przerwac" --title="Pliki"`
         
-        isNum=$(isNumber2 "$filesCount")
+        isNum=$(isNumber "$filesCount")
         
         if [ $isNum -eq $FALSE ]; then
             filesCount=-1
@@ -39,7 +39,7 @@ function handleCompareFiles {
         fi
     done
     
-    paths=()
+    local _paths=()
     
     addedFiles=0
     
@@ -51,11 +51,11 @@ function handleCompareFiles {
             continue
         fi
         
-        paths+=("$path")
+        _paths+=("$path")
         addedFiles=$((addedFiles+1))
     done
     
-    compareFiles "${paths[@]}"
+    compareFiles "${_paths[@]}"
     
 }
 
@@ -65,7 +65,7 @@ function handleCompareDirectories {
     while [ $dirCount -lt 2 ]; do
         dirCount=`zenity --entry --text="Podaj ilosc folderow do porownania\n- minimum 2\n- 0 by przerwac" --title="Foldery"`
         
-        isNum=$(isNumber2 "$dirCount")
+        isNum=$(isNumber "$dirCount")
         
         if [ $isNum -eq $FALSE ]; then
             dirCount=-1
@@ -98,7 +98,6 @@ function handleCompareDirectories {
     
     
     compareDirectories "${directories[@]}"
-    
 }
 
 

@@ -1,0 +1,15 @@
+Przeszukane pliki:
+/Users/jakubbot/Desktop/MD5/test/a.txt
+/Users/jakubbot/Desktop/MD5/test/b.txt
+
+Pliki bez potrzebnych uprawnien read(ominiete w porownaniach):
+/Users/jakubbot/Desktop/MD5/test/c.txt
+Suma: 1
+
+Pliki różniące się od pliku referencyjnego:
+Brak
+
+Plik referencyjny(glowny):
+/Users/jakubbot/Desktop/MD5/test/a.txt
+
+Raport wygenerowany: ptk 19 kwi 18:43:50 2024 CEST
