@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Jakub Bot 2024, MIT, 2024
-# Porownywarka plikow, katalogow na podstawie algorytmu kryptograficznej funkcji skrotu SHA256 
+# Porownywarka plikow, katalogow na podstawie algorytmu kryptograficznego MD5
 
 source constants.sh
 source finder.sh
+source compareMD5.sh
 
 $selectedOption
 
@@ -20,16 +21,27 @@ function printMainMenu {
 
 
 function handleCompareFiles {
-  # podaj ilosc plikow
-   iloscPlikow=`zenity --entry --text="Podaj ilosc plikow do porownania"`
+   filesCount=`zenity --entry --text="Podaj ilosc plikow do porownania"`
 
-  # petla pobierajaca sciezki do plikow
-  for (( i=1; i<=$iloscPlikow; i++ ))
-  do
-  findFile
-    # sciezkaPliku=`zenity --file-selection --title="Wybierz plik $i"`
-    # echo "Sciezka pliku $i: $sciezkaPliku"
+  paths=()
+
+  addedFiles=0
+  #przerob for na while
+  while [ $filesCount -ne $addedFiles ]; do
+    path=$(findFile)
+
+    if [ -z "$path" ]; then
+      continue
+    fi
+
+    paths+=("$path")
+    addedFiles=$((addedFiles+1))
   done
+
+
+  echo "pathsxx ${paths[@]}"
+  # compareFiles "$paths"
+  compareFiles "${paths[@]}"
 
 }
 

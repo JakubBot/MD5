@@ -44,10 +44,10 @@ function findFile {
         return
     fi
     
-    find_query="find \"$found_folder\" -type f -name \"$fileName*\""
+    # -quit = zatrzymuje szukanie po znalezieniu pierwszego pliku
+    find_query="find \"$found_folder\" -type f -name \"$fileName*\" -print -quit"
     
     wynik=$(eval "$find_query")
-    
     
     
     #reset
