@@ -8,7 +8,7 @@ function findFolder {
         found_folder="/"
     else
         found_folder=$(find "$HOME" -type d -name "$directory" -print -quit)
-
+        
         
         if [ -z "$found_folder" ]; then
             # echo "Folder \"$directory\" nie został znaleziony."
@@ -39,7 +39,6 @@ function findFile {
     found_folder=$(findFolder)
     
     if [ $? -eq 1 ]; then
-        # echo "Nie znaleziono katalogu."
         zenity --info --text "Nie znaleziono katalogu."
         return
     fi
@@ -53,6 +52,22 @@ function findFile {
     #reset
     fileName=""
     directory=""
-
+    
     echo "$wynik"
+}
+
+function handleFolderSearch {
+    getDirectory
+    
+    found_folder=$(findFolder)
+    
+    
+    if [ $? -eq 1 ]; then
+        zenity --info --text "Nie znaleziono katalogu."
+        return
+    fi
+    
+    directory=""
+    
+    echo "$found_folder"
 }
