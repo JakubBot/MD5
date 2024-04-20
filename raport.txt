@@ -1,23 +1,5 @@
-Przeszukane foldery:
- - /Users/jakubbot/Desktop/MD5/test/aaa
- - /Users/jakubbot/Desktop/MD5/test/bbb
- - /Users/jakubbot/Desktop/MD5/test/ccc
-
-Folder referencyjny(glowny):
- - /Users/jakubbot/Desktop/MD5/test/aaa
-
-Foldery różniące się od folderu referencyjnego:
- - /Users/jakubbot/Desktop/MD5/test/bbb na podstawie:
+Pliki różniące się od backup'u:
       Pliki różniące się:
-       /Users/jakubbot/Desktop/MD5/test/aaa/a.js
-      Pliki nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
-       /Users/jakubbot/Desktop/MD5/test/bbb/b.js
+       /var/folders/k2/n5wv1mtj26xdqyt4d79rwc9r0000gn/T/tmp.FUDL6kM50F/aaa/a.js
 
-Suma: 1
-
-Foldery nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
- - /Users/jakubbot/Desktop/MD5/test/ccc
-
-Suma: 1
-
-Raport wygenerowany: sob 20 kwi 15:16:15 2024 CEST
+Raport wygenerowany: ndz 21 kwi 01:47:01 2024 CEST

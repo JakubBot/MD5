@@ -6,6 +6,7 @@
 source constants.sh
 source finder.sh
 source compareMD5.sh
+source backup.sh
 source utils.sh
 
 $selectedOption
@@ -13,7 +14,7 @@ $selectedOption
 
 # glowne menu
 function printMainMenu {
-    menu=("$porownajPliki" "$porownajKatalogi" "$porownajZListy" "$komendaWTerminalu" "$wyjscie")
+    menu=("$porownajPliki" "$porownajKatalogi" "$stworzBackup" "$zmianyWPlikach" "$przywrocPliki"  "$komendaWTerminalu" "$wyjscie")
     
     odp=`zenity --list --column=Menu "${menu[@]}" --height 420`
     
@@ -78,7 +79,7 @@ function handleCompareDirectories {
         fi
     done
     
-     _directories=()
+    _directories=()
     
     addedDirectories=0
     
@@ -101,6 +102,36 @@ function handleCompareDirectories {
 }
 
 
+
+function handleCreateBackup {
+    
+    local backupDir=""
+    
+    while [ -z "$backupDir" ]; do
+        backupDir=$(handleFolderSearch)
+    done
+    
+    
+    createBackup "$backupDir"
+}
+
+function handleFolderChanges {
+    local _directory=""
+    
+    while [ -z "$_directory" ]; do
+        _directory=$(handleFolderSearch)
+        
+        local backupFileName=$(filenameToBackupConverter "$_directory")
+        
+        if ! test -e "backup/$backupFileName.tar.gz"; then
+            zenity --info --text "Nie znaleziono folderu" --width=200 --height=200
+            _directory=""
+        fi
+    done
+    
+    findChangesInFolder "$_directory"
+}
+
 # wywolywanie akcji dla glownego menu
 function handleSelectedOption {
     case $selectedOption in
@@ -110,8 +141,11 @@ function handleSelectedOption {
         "$porownajKatalogi")
             handleCompareDirectories
         ;;
-        "$porownajZListy")
-            handleCompareDirectories
+        "$stworzBackup")
+            handleCreateBackup
+        ;;
+        "$zmianyWPlikach")
+            handleFolderChanges
         ;;
         "$komendaWTerminalu")
             handleTerminalCommand
@@ -132,5 +166,6 @@ function start {
         
     done
 }
+
 
 start

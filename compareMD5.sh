@@ -33,11 +33,33 @@ function generateMD5 {
 }
 
 function generateMD5ForDirectory {
+    
     # Get the MD5 checksum of the directory
     wynik=$(find "${1}" -type f -exec md5sum {} \; | cut -d ' ' -f 1 | md5sum | cut -d ' ' -f 1)
     
     echo "$wynik"
 }
+
+function generateMD5ForTar {
+    # Get the MD5 checksum of the tar file
+    
+    # Tworzenie tymczasowego folderu
+    temp_folder=$(mktemp -d)
+    
+    local sourceTar="$1"
+    # Wypakowywanie archiwum do tymczasowego folderu
+    tar xf $sourceTar -C "$temp_folder"
+    
+    # Obliczanie sumy kontrolnej MD5 dla tymczasowego folderu
+    wynik=$(generateMD5ForDirectory "$temp_folder")
+    
+    # Usuwanie tymczasowego folderu
+    rm -rf "$temp_folder"
+    
+    echo "$wynik"
+}
+
+
 
 
 # first argument is the file paths(array)
@@ -151,6 +173,19 @@ function compareDirectories {
     notExistingFilesInDirs=()
 }
 
+function resetVars {
+    allPaths=()
+    allDirectories=()
+    paths=()
+    directories=()
+    diffrentFiles=()
+    inaccessible_paths=()
+    inaccessible_directories=()
+    inaccessible_paths_in_dirs=()
+    diffrentDirectories=()
+    diffrentFilesInDirs=()
+    notExistingFilesInDirs=()
+}
 
 function getDiffrentFilesInDirs {
     # for two directories, return an array of files that are different
@@ -163,6 +198,7 @@ function getDiffrentFilesInDirs {
     local firstDirFiles=($(find "$firstDir" -type f))
     # get all files from the second directory
     local secondDirFiles=($(find "$secondDir" -type f))
+    
     
     for file in "${firstDirFiles[@]}"; do
         # get the file name
@@ -196,5 +232,7 @@ function getDiffrentFilesInDirs {
             fi
         fi
     done
+    
+    
     
 }

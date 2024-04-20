@@ -1,7 +1,7 @@
 source constants.sh
 
 # dont add .sh because it creates some kind of loop and throws segmentation fault
-source compareMD5
+# source compareMD5
 
 function isNumber {
     re='^[0-9]+$'
@@ -10,6 +10,12 @@ function isNumber {
     else
         echo $TRUE
     fi
+}
+
+function filenameToBackupConverter {
+    local backupDir=$1
+    local dirName=$(echo "$backupDir" | sed "s/\//$slashToCodeConverter/g")
+    echo "$dirName"
 }
 
 # arguments
@@ -137,5 +143,105 @@ function generateDirectoryRaport {
     
     echo "" >> "raport.txt"
     echo "Raport wygenerowany: $(date)" >> "raport.txt"
+    
+    resetVars
+}
+
+
+function createBackup {
+    local backupDir=$1
+    
+    local dirName=$(echo "$backupDir" | sed "s/\//$slashToCodeConverter/g")
+    
+    
+    tar -czf "backup/$dirName.tar.gz" -C "$(dirname "$backupDir")" "$(basename "$backupDir")"
+    
+    zenity --info --text "Kopia zapasowa utworzona" --width=200 --height=200
+    
+}
+
+# /Users/jakubbot/Desktop/MD5/backup/#$%Users#$%jakubbot#$%Desktop#$%MD5#$%test#$%aaa.tar.gz
+
+function getAbsolutePath {
+    local path=$1
+    echo $(realpath "$path")
+    
+}
+
+function extractArchive {
+    local nazwapliku="$1"
+    
+    # local pathToArchive=$(echo "$nazwapliku" | sed "s/$slashToCodeConverter/\//g")
+    
+    # local temp_folder="$pathToArchive"
+    # mkdir -p "$temp_folder"
+    # local temp_folder=$(mktemp -d "backup/$nazwapliku.XXXXXX")
+    # local temp_folder=$(mktemp -d "backup/$nazwapliku.XXXXXX")
+    local currentPath=$(pwd)
+    
+    
+    local backupDirPath="$currentPath/backup/$nazwapliku.tar.gz"
+    # local backupDirPath=$(find . -type f -name "$nazwapliku")
+    # local backupDirPath=$(find $currentPath -type f -name "$nazwapliku" -exec realpath {} \;)
+    
+    # mkdir -p temp
+    temp_folder=$(mktemp -d)
+    # tar xf "$backupDirPath" -C "temp"
+    tar xf "$backupDirPath" -C "$temp_folder"
+    # local tempPath=$(realpath "temp")
+    echo "$temp_folder"
+}
+
+function generateRaportBackupFolders {
+    
+    echo "Pliki różniące się od backup'u:" > "raport.txt"
+    
+    local userDirectory=$1
+    local isEqual=$2
+    
+    local backupFileName=$(filenameToBackupConverter "$userDirectory")
+    
+    
+    if [ $isEqual -eq $TRUE ]; then
+        echo "Brak" >> "raport.txt"
+    else
+        # show why folders are not equal based on
+        # if files are different / not existing / no readable
+        local temp_folder=$(extractArchive "$backupFileName" )
+        
+        getDiffrentFilesInDirs "$temp_folder" "$userDirectory"
+        
+        diffrentFilesInDirsLength=${#diffrentFilesInDirs[@]}
+        notExistingFilesInDirsLength=${#notExistingFilesInDirs[@]}
+        inaccessible_paths_in_dirs_length=${#inaccessible_paths_in_dirs[@]}
+        
+        if [ $diffrentFilesInDirsLength -gt 0 ]; then
+            echo "      Pliki różniące się:" >> "raport.txt"
+            for file in "${diffrentFilesInDirs[@]}"; do
+                echo "       $file" >> "raport.txt"
+            done
+        fi
+        
+        if [ $notExistingFilesInDirsLength -gt 0 ]; then
+            echo "      Pliki nie istniejące:" >> "raport.txt"
+            for file in "${notExistingFilesInDirs[@]}"; do
+                echo "       $file" >> "raport.txt"
+            done
+        fi
+        
+        if [ $inaccessible_paths_in_dirs_length -gt 0 ]; then
+            echo "      Pliki nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):" >> "raport.txt"
+            for path in "${inaccessible_paths_in_dirs[@]}"; do
+                echo "       $path" >> "raport.txt"
+            done
+        fi
+        
+    fi
+    
+    
+    echo "" >> "raport.txt"
+    echo "Raport wygenerowany: $(date)" >> "raport.txt"
+    
+    resetVars
     
 }
