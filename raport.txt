@@ -1,15 +1,23 @@
-Przeszukane pliki:
-/Users/jakubbot/Desktop/MD5/test/a.txt
-/Users/jakubbot/Desktop/MD5/test/b.txt
+Przeszukane foldery:
+ - /Users/jakubbot/Desktop/MD5/test/aaa
+ - /Users/jakubbot/Desktop/MD5/test/bbb
+ - /Users/jakubbot/Desktop/MD5/test/ccc
 
-Pliki bez potrzebnych uprawnien read(ominiete w porownaniach):
-/Users/jakubbot/Desktop/MD5/test/c.txt
+Folder referencyjny(glowny):
+ - /Users/jakubbot/Desktop/MD5/test/aaa
+
+Foldery różniące się od folderu referencyjnego:
+ - /Users/jakubbot/Desktop/MD5/test/bbb na podstawie:
+      Pliki różniące się:
+       /Users/jakubbot/Desktop/MD5/test/aaa/a.js
+      Pliki nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
+       /Users/jakubbot/Desktop/MD5/test/bbb/b.js
+
 Suma: 1
 
-Pliki różniące się od pliku referencyjnego:
-Brak
+Foldery nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
+ - /Users/jakubbot/Desktop/MD5/test/ccc
 
-Plik referencyjny(glowny):
-/Users/jakubbot/Desktop/MD5/test/a.txt
+Suma: 1
 
-Raport wygenerowany: ptk 19 kwi 18:43:50 2024 CEST
+Raport wygenerowany: sob 20 kwi 15:16:15 2024 CEST

@@ -78,7 +78,7 @@ function handleCompareDirectories {
         fi
     done
     
-    directories=()
+     _directories=()
     
     addedDirectories=0
     
@@ -92,12 +92,12 @@ function handleCompareDirectories {
             continue
         fi
         
-        directories+=("$directory")
+        _directories+=("$directory")
         addedDirectories=$((addedDirectories+1))
     done
     
     
-    compareDirectories "${directories[@]}"
+    compareDirectories "${_directories[@]}"
 }
 
 
