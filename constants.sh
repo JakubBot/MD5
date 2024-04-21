@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#main list options
 porownajPliki="Porównaj pliki"
 porownajKatalogi="Porównaj katalogi"
 
@@ -9,8 +10,12 @@ przywrocPliki="Przywroc stan plikow z kopii zapasowej"
 
 backupFolder="backup"
 
-komendaWTerminalu="Komenda w terminalu"
+informacjeOAplikcaji="O aplikacji"
 wyjscie="Wyjście"
+
+#inner list options
+pomoc="Pomoc"
+wersja="Wersja"
 
 universalInfoWidth=320
 

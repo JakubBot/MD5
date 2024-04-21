@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# Jakub Bot 2024, MIT, 2024
-# Porownywarka plikow, katalogow na podstawie algorytmu kryptograficznego MD5
+# Author           : Jakub Bot ( bkuba1401@gmail.com )
+# Created On       : 21.04.2024
+# Version          : 1.0.0
+#
+# Description      : Comparison of files, directories based on MD5 cryptographic algorithm. Creating backups, restoring files, checking changes in files.
+#
+# Licensed under GPL (see /usr/share/common-licenses/GPL for more details
+# or contact # the Free Software Foundation for a copy)
 
 source constants.sh
 source finder.sh
@@ -14,7 +20,7 @@ $selectedOption
 
 # glowne menu
 function printMainMenu {
-    menu=("$porownajPliki" "$porownajKatalogi" "$stworzBackup" "$zmianyWPlikach" "$przywrocPliki"  "$komendaWTerminalu" "$wyjscie")
+    menu=("$porownajPliki" "$porownajKatalogi" "$stworzBackup" "$zmianyWPlikach" "$przywrocPliki"  "$informacjeOAplikcaji" "$wyjscie")
     
     odp=`zenity --list --column=Menu "${menu[@]}" --height 420`
     
@@ -149,6 +155,19 @@ function handleFolderChanges {
     findChangesInFolder "$_directory"
 }
 
+function handleAppInfo {
+    # zenity --info --text "Aplikacja do porownywania plikow, katalogow, tworzenia kopii zapasowych, przywracania plikow, sprawdzania zmian w plikach.\n\nAutor: Jakub Bot\nWersja: 1.0.0\nData utworzenia: 21.04.2024" --width=$universalInfoWidth --height=200
+    local _menu=("$pomoc" "$wersja")
+    
+    odp=`zenity --list --column=Menu "${_menu[@]}" --height 350`
+    
+    if [ "$odp" == "$pomoc" ]; then
+        zenity --info --text "Aplikacja do porownywania plikow, katalogow. Wykorzystuje md5 w porownaniach.\nTworzy kopie zapasowa, przywraca pliki i za pomoca md5 analizuje jakie pliki zostaly zmienione." --width=$universalInfoWidth --height=200
+        elif [ "$odp" == "$wersja" ]; then
+        zenity --info --text "\nAutor: Jakub Bot\nWersja: 1.0.0\nData utworzenia: 21.04.2024" --width=250 --height=240
+    fi
+}
+
 # wywolywanie akcji dla glownego menu
 function handleSelectedOption {
     case $selectedOption in
@@ -167,8 +186,8 @@ function handleSelectedOption {
         "$przywrocPliki")
             handleRestoreBackupFiles
         ;;
-        "$komendaWTerminalu")
-            handleTerminalCommand
+        "$informacjeOAplikcaji")
+            handleAppInfo
         ;;
         "$wyjscie")
             exit 0
