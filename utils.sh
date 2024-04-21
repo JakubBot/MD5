@@ -193,7 +193,8 @@ function generateRaportBackupFolders {
         # if files are different / not existing / no readable
         local temp_folder=$(extractArchive "$backupFileName" )
         
-        getDiffrentFilesInDirs "$temp_folder" "$userDirectory"
+        # getDiffrentFilesInDirs "$userDirectory" "$temp_folder"
+        getDiffrentFilesInDirs "$temp_folder" "$userDirectory" $TRUE
         
         rm -rf "$temp_folder"
         

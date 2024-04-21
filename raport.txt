@@ -1,5 +1,9 @@
 Pliki różniące się od backup'u:
+      Pliki różniące się:
+       /Users/jakubbot/Desktop/MD5/test/aaa/inner/siema.js
+      Pliki nie istniejące:
+       /Users/jakubbot/Desktop/MD5/test/aaa/a.js
       Pliki nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
-       
+       /Users/jakubbot/Desktop/MD5/test/aaa/b.js
 
-Raport wygenerowany: ndz 21 kwi 15:14:51 2024 CEST
+Raport wygenerowany: ndz 21 kwi 16:04:12 2024 CEST

@@ -193,6 +193,7 @@ function getDiffrentFilesInDirs {
     # $2 - second directory
     local firstDir="$1"
     local secondDir="$2"
+    local useSecondDirAsDiffValues="${3:-$FALSE}"
     
     # get all files from the first directory
     local firstDirFiles=($(find "$firstDir" -type f))
@@ -208,19 +209,32 @@ function getDiffrentFilesInDirs {
         
         if [ ! -r "$file" ]; then
             continue
-            
         fi
         
         local secondFilePath=$(find "$secondDir" -type f -name "$fileName" -print -quit)
         
-        if [ ! -r "$secondFilePath" ]; then
-            inaccessible_paths_in_dirs+=("$secondFilePath")
-            continue
-        fi
         
         # if the file does not exist in the second directory
         if [ -z "$secondFilePath" ]; then
-            notExistingFilesInDirs+=("$file")
+            if [ $useSecondDirAsDiffValues -eq $TRUE ]; then
+                # create path based on the second directory, no need last part of the path
+                local sourcePath=$(echo "$secondDir" | sed 's/\/[^/]*$//')
+                local particularFolderPath=$(echo "$file" | sed 's|.*tmp\.[^/]*\/||')
+                
+                echo "secondDir: $secondDir"
+                echo "sourcePath: $sourcePath"
+                echo "particularFolderPath: $particularFolderPath"
+                echo "file: $file"
+                
+                notExistingFilesInDirs+=("$sourcePath/$particularFolderPath")
+            else
+                notExistingFilesInDirs+=("$file")
+            fi
+            
+            elif [ ! -r "$secondFilePath" ]; then
+            # here we always use the second directory as return value so we dont need to use useSecondDirAsDiffValues
+            inaccessible_paths_in_dirs+=("$secondFilePath")
+            continue
         else
             # get the md5 checksum of the file in the first directory
             local firstFileMD5=$(generateMD5 "$file")
@@ -228,7 +242,11 @@ function getDiffrentFilesInDirs {
             local secondFileMD5=$(generateMD5 "$secondFilePath")
             # if the md5 checksums are diffrent
             if [ "$firstFileMD5" != "$secondFileMD5" ]; then
-                diffrentFilesInDirs+=("$file")
+                if [ $useSecondDirAsDiffValues -eq $TRUE ]; then
+                    diffrentFilesInDirs+=("$secondFilePath")
+                else
+                    diffrentFilesInDirs+=("$file")
+                fi
             fi
         fi
     done
