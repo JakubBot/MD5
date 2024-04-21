@@ -160,29 +160,13 @@ function createBackup {
     
 }
 
-# /Users/jakubbot/Desktop/MD5/backup/#$%Users#$%jakubbot#$%Desktop#$%MD5#$%test#$%aaa.tar.gz
-
-function getAbsolutePath {
-    local path=$1
-    echo $(realpath "$path")
-    
-}
-
 function extractArchive {
     local nazwapliku="$1"
     
-    # local pathToArchive=$(echo "$nazwapliku" | sed "s/$slashToCodeConverter/\//g")
-    
-    # local temp_folder="$pathToArchive"
-    # mkdir -p "$temp_folder"
-    # local temp_folder=$(mktemp -d "backup/$nazwapliku.XXXXXX")
-    # local temp_folder=$(mktemp -d "backup/$nazwapliku.XXXXXX")
     local currentPath=$(pwd)
     
     
     local backupDirPath="$currentPath/backup/$nazwapliku.tar.gz"
-    # local backupDirPath=$(find . -type f -name "$nazwapliku")
-    # local backupDirPath=$(find $currentPath -type f -name "$nazwapliku" -exec realpath {} \;)
     
     # mkdir -p temp
     temp_folder=$(mktemp -d)
@@ -210,6 +194,8 @@ function generateRaportBackupFolders {
         local temp_folder=$(extractArchive "$backupFileName" )
         
         getDiffrentFilesInDirs "$temp_folder" "$userDirectory"
+        
+        rm -rf "$temp_folder"
         
         diffrentFilesInDirsLength=${#diffrentFilesInDirs[@]}
         notExistingFilesInDirsLength=${#notExistingFilesInDirs[@]}

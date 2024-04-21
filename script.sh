@@ -115,6 +115,23 @@ function handleCreateBackup {
     createBackup "$backupDir"
 }
 
+function handleRestoreBackupFiles {
+    local _directory=""
+    
+    while [ -z "$_directory" ]; do
+        _directory=$(handleFolderSearch)
+        
+        local backupFileName=$(filenameToBackupConverter "$_directory")
+        
+        if ! test -e "backup/$backupFileName.tar.gz"; then
+            zenity --info --text "Nie stworzona kopi zapasowej folderu" --width=200 --height=200
+            _directory=""
+        fi
+    done
+    
+    restoreBackupFiles "$_directory"
+}
+
 function handleFolderChanges {
     local _directory=""
     
@@ -124,7 +141,7 @@ function handleFolderChanges {
         local backupFileName=$(filenameToBackupConverter "$_directory")
         
         if ! test -e "backup/$backupFileName.tar.gz"; then
-            zenity --info --text "Nie znaleziono folderu" --width=200 --height=200
+            zenity --info --text "Nie stworzona kopi zapasowej folderu" --width=200 --height=200
             _directory=""
         fi
     done
@@ -146,6 +163,9 @@ function handleSelectedOption {
         ;;
         "$zmianyWPlikach")
             handleFolderChanges
+        ;;
+        "$przywrocPliki")
+            handleRestoreBackupFiles
         ;;
         "$komendaWTerminalu")
             handleTerminalCommand

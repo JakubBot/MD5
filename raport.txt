@@ -1,5 +1,5 @@
 Pliki różniące się od backup'u:
-      Pliki różniące się:
-       /var/folders/k2/n5wv1mtj26xdqyt4d79rwc9r0000gn/T/tmp.FUDL6kM50F/aaa/a.js
+      Pliki nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
+       
 
-Raport wygenerowany: ndz 21 kwi 01:47:01 2024 CEST
+Raport wygenerowany: ndz 21 kwi 15:14:51 2024 CEST

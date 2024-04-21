@@ -24,12 +24,34 @@ function findChangesInFolder {
     local isEqual=-1
     if [ "$userDirectoryMD5" == "$backupMD5" ]; then
         isEqual=$TRUE
-        zenity --info --text "Brak zmian w folderze" --width=200 --height=200
+        zenity --info --text "Brak zmian w folderze\n\nRaport zostal wygenerowany w pliku raport.txt" --width=200 --height=200
     else
         isEqual=$FALSE
-        zenity --info --text "Znaleziono zmiany w folderze" --width=200 --height=200
+        zenity --info --text "Znaleziono zmiany w folderze\n\nRaport zostal wygenerowany w pliku raport.txt" --width=200 --height=200
     fi
     
     generateRaportBackupFolders "$userDirectory" "$isEqual"
     
+}
+
+function restoreBackupFiles {
+    local _directory=$1
+    
+    local backupFileName=$(filenameToBackupConverter "$_directory")
+    
+    local temp_folder=$(extractArchive "$backupFileName")
+    
+    # Remove all files from the target directory
+    rm -rf "$_directory"/*
+    
+    # remove the last directory from the path, we move whole folder to the original directory
+    local targetPath=$(echo "$_directory" | sed 's/\/[^/]*$//')
+
+    # Move all files from the temporary folder to the target directory
+    mv "$temp_folder"/* "$targetPath"
+    
+    # Remove the temporary folder
+    rm -rf "$temp_folder"
+    
+    zenity --info --text "Pliki przywrócone" --width=200 --height=200
 }
