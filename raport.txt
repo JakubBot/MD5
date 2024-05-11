@@ -1,5 +1,16 @@
-Pliki różniące się od backup'u:
-      Pliki nie istniejące:
-       /Users/jakubbot/Desktop/MD5/test/Adam/dania/bulka.txt
+Przeszukane pliki:
+ - /Users/jakubbot/Desktop/MD5/test/Franek/dania/chleb.txt
+ - /Users/jakubbot/Desktop/MD5/test/Jakub/dania/chleb.txt
+ - /Users/jakubbot/Desktop/MD5/test/Adam/dania/bulka.txt
 
-Raport wygenerowany: ndz 21 kwi 16:34:24 2024 CEST
+Plik referencyjny(glowny):
+ - /Users/jakubbot/Desktop/MD5/test/Franek/dania/chleb.txt
+
+Pliki różniące się od pliku referencyjnego:
+ - /Users/jakubbot/Desktop/MD5/test/Adam/dania/bulka.txt
+Suma: 1
+
+Pliki nie posiadajace potrzebnych uprawnien read(ominiete w porownaniach):
+Brak
+
+Raport wygenerowany: sob 11 maj 17:32:30 2024 CEST

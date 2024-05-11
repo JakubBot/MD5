@@ -41,7 +41,7 @@ function generateFileRaport {
     if [ $diffrentFilesLength -eq 0 ]; then
         echo "Brak" >> "raport.txt"
     else
-        for path in "$diffrentFiles"; do
+        for path in "${diffrentFiles[@]}"; do
             echo " - $path" >> "raport.txt"
         done
         echo "Suma: $diffrentFilesLength" >> "raport.txt"
@@ -56,7 +56,7 @@ function generateFileRaport {
     if [ $inaccessible_paths_length -eq 0 ]; then
         echo "Brak" >> "raport.txt"
     else
-        for path in "$inaccessible_paths"; do
+        for path in "${inaccessible_paths[@]}"; do
             echo " - $path" >> "raport.txt"
         done
         echo "Suma: $inaccessible_paths_length" >> "raport.txt"
@@ -87,7 +87,7 @@ function generateDirectoryRaport {
     if [ $diffrentDirectoriesLength -eq 0 ]; then
         echo "Brak" >> "raport.txt"
     else
-        for path in "$diffrentDirectories"; do
+        for path in "${diffrentDirectories[@]}"; do
             echo " - $path na podstawie:" >> "raport.txt"
             # show why folders are not equal based on
             # if files are different / not existing / no readable
@@ -134,7 +134,7 @@ function generateDirectoryRaport {
     if [ $inaccessible_directories_length -eq 0 ]; then
         echo "Brak" >> "raport.txt"
     else
-        for path in "$inaccessible_directories"; do
+        for path in "${inaccessible_directories[@]}"; do
             echo " - $path" >> "raport.txt"
         done
         echo "" >> "raport.txt"
