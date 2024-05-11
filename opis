@@ -1,0 +1,21 @@
+Temat: 9. Porównywanie plikow i katalogow wg skrótu md5
+Skrypt:
+
+- interfejs w zenity
+- Obsługa katalogów
+- Rekurencyjne przechodzenie po plikach, sprawdzanie hash plikow. Pliki które mają
+  różne hashe zapisujemy do pliku info.txt(wraz z innymi danymi), na końcu generujemy
+  hash dla folderu(jeśli operujemy na folderach) i porównujemy. Wszystko główne działania
+  będą widoczne w głównym pliku txt - info.txt, gdzie będzie można zobaczyć wyniki
+  porównań i inne dane.
+- Obsługa wielu plików
+- Użytkownik może porównywać wiele folderow i plikow(ustawiamy 1 jako główny i
+  potem przekazujemy wszystkie foldery/pliki ktore maja byc z nim porównywane)
+- Podczas rekurencyjnego generowania hasha, sprawdzanie czy mamy uprawnienia
+  chociażby do odczytu pliku, w przeciwnym razie omijamy plik i w pliku info.txt z
+  porównaniami / wynikami również zaznaczamy pliki które nie zostały skontrolowane
+- sprawdzanie integralności systemu
+- Możliwość zrobienia backupu całego folderu.
+- Generowanie listy plików które zostały zmienione(nazwa / ścieżka / data zmiany, tak by
+  latwo kontrolowac wszystkie zmiany),
+- Dodanie opcji przywracania stanu początkowego(usuwania wszystkich zmian)
